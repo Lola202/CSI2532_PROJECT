@@ -1,40 +1,14 @@
-const pg = require('pg');
-// const client = new pg.Client({
-// host: 'localhost',
-// user: 'Group_CSI',
-// port: 3000,
-// password: 'password',
-// database: 'Hotel_Chain'
-// })
-// try {
-//     await client.connect();
-//     const res = await client.query('SELECT * FROM artist;');
-//     console.log(res.rows);
-// } catch (err) {
-//     console.error('Error executing query:', err);
-// } finally {
-//     await client.end();
-// }
+const { Client } = require('pg');
 
-async function main() {
-    const client = new pg.Client({
-        host: 'localhost',
-        user: 'Group_CSI',
-        port: 5432,
-        password: 'password',
-        database: 'Hotel_Chain'
-    });
+const client = new Client({
+    host: 'localhost',
+    user: 'group_csi',
+    port: 5432,
+    password: 'password',
+    database: 'Hotel_Chain'
+});
 
-    try {
-        await client.connect();
-        const res = await client.query('SELECT * FROM laboratories.artist;');
-        console.log(res.rows);
-    } catch (err) {
-        console.error('Error executing query:', err);
-    } finally {
-        await client.end();
-    }
-}
-
-main();
-
+client.connect()
+    .then(() => console.log('Connected to the database'))
+    .catch(err => console.error('Connection error', err))
+    .finally(() => client.end());
